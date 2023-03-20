@@ -1,12 +1,22 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BiUser } from 'react-icons/bi'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
+import Cookies from 'universal-cookie'
 
 import logo from '../logo.jpg'
 
 const Header = () => {
   const location = useLocation()
-  const [isLogin, setIsLogin] = useState(true)
+  const [isLogin, setIsLogin] = useState(false)
+
+  const cookies = new Cookies()
+  const tokenAccess = cookies.get('tokenAccess')
+
+  useEffect(() => {
+    if (tokenAccess) {
+      setIsLogin(true)
+    }
+  }, [tokenAccess])
 
   if (location.pathname === '/login' || location.pathname === '/register') {
     return null
@@ -23,14 +33,21 @@ const Header = () => {
         placeholder="Tìm kiếm..."
       />
       {isLogin ? (
+        // <div className="relative">
         <div className="lg:hover:cursor-pointer border-2 border-solid border-black rounded-full p-1">
           <BiUser className="text-2xl" />
         </div>
       ) : (
+        // <div className="absolute bg-gray-400 w-32 right-0 translate-x-1/2">
+        // <p className="text-center">Đăng xuất</p>
+        // </div>
+        // </div>
         <div>
-          <p className="uppercase font-semibold mobile:text-sm sm:text-base text-center">
-            đăng nhập
-          </p>
+          <Link to="/login">
+            <p className="uppercase font-semibold mobile:text-sm sm:text-base text-center">
+              đăng nhập
+            </p>
+          </Link>
         </div>
       )}
     </header>

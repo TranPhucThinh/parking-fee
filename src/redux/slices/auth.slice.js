@@ -7,7 +7,16 @@ export const authApi = createApi({
     registerCus: builder.mutation({
       query: (body) => {
         return {
-          url: `auth/register/customer`,
+          url: 'auth/register/customer',
+          method: 'POST',
+          body
+        }
+      }
+    }),
+    loginCus: builder.mutation({
+      query: (body) => {
+        return {
+          url: 'auth/login',
           method: 'POST',
           body
         }
@@ -16,4 +25,4 @@ export const authApi = createApi({
   })
 })
 
-export const { useRegisterCusMutation } = authApi
+export const { useRegisterCusMutation, useLoginCusMutation } = authApi

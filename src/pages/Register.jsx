@@ -5,7 +5,7 @@ import {
   AiFillEyeInvisible,
   AiOutlineExclamationCircle,
 } from 'react-icons/ai'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { toast, ToastContainer } from 'react-toastify'
 
 import 'react-toastify/dist/ReactToastify.css'
@@ -44,7 +44,7 @@ const Register = () => {
   const name = useRef(null)
   name.current = watch('name')
 
-  const [registerCus, registerCusResult] = useRegisterCusMutation()
+  const [registerCus] = useRegisterCusMutation()
 
   const onSubmit = async ({ name, email, phoneNumber, password, address }) => {
     registerCus({
@@ -52,7 +52,7 @@ const Register = () => {
       email: email,
       phoneNumber: phoneNumber,
       password: password,
-      address: address,
+      address: '',
     }).then((res) => {
       if (res?.error?.originalStatus === 400) {
         console.log(res?.error?.data)
@@ -122,7 +122,7 @@ const Register = () => {
                     },
                   })}
                   placeholder="Nguyễn Văn A"
-                  className="focus:outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-blue-500 p-2.5"
+                  className="input__field p-2"
                 />
                 {errors?.name && (
                   <p className="text-red-500 text-sm italic">
@@ -145,7 +145,7 @@ const Register = () => {
                     },
                   })}
                   placeholder="email@gmail.com"
-                  className="focus:outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-blue-500 p-2.5"
+                  className="input__field p-2"
                 />
                 {errors?.email && (
                   <p className="text-red-500 text-sm italic">
@@ -168,7 +168,7 @@ const Register = () => {
                     },
                   })}
                   placeholder="999-999-9999"
-                  className="focus:outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-blue-500 p-2.5"
+                  className="input__field p-2"
                 />
                 {errors?.phoneNumber && (
                   <p className="text-red-500 text-sm italic">
@@ -200,7 +200,7 @@ const Register = () => {
                       },
                     })}
                     placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
-                    className="w-full focus:outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-blue-500 p-2.5"
+                    className="w-full input__field p-2"
                   />
                   {typePass ? (
                     <AiFillEyeInvisible
@@ -236,7 +236,7 @@ const Register = () => {
                         passwordConfirmationMessage,
                     })}
                     placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;"
-                    className="w-full focus:outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-blue-500 p-2.5"
+                    className="w-full input__field p-2"
                   />
                   {typePass ? (
                     <AiFillEyeInvisible
@@ -257,33 +257,6 @@ const Register = () => {
                 )}
               </div>
 
-              {/* input address */}
-              <div className="flex flex-col mb-4">
-                <label className="ml-2">
-                  Địa chỉ<span className="text-red-500"> *</span>
-                </label>
-                <input
-                  {...register('address', {
-                    required: requireMessage,
-                    minLength: {
-                      value: 5,
-                      message: minLengthMessage.replace('value', 5),
-                    },
-                    maxLength: {
-                      value: 50,
-                      message: maxLengthMessage.replace('value', 50),
-                    },
-                  })}
-                  placeholder="Địa chỉ của bạn"
-                  className="focus:outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:border-blue-500 p-2.5"
-                />
-                {errors?.address && (
-                  <p className="text-red-500 text-sm italic">
-                    {errors?.address?.message}
-                  </p>
-                )}
-              </div>
-
               <div className="flex justify-center">
                 <button
                   type="submit"
@@ -294,6 +267,12 @@ const Register = () => {
                 </button>
               </div>
             </form>
+            <p className="mt-4">
+              Nếu đã có tài khoản, hãy đăng nhập{' '}
+              <Link to="/login">
+                <span className="text-blue-400 italic">tại đây</span>
+              </Link>
+            </p>
           </div>
         </div>
       </div>
